@@ -4,6 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-BlazorApp1-C0E29511-A903-4E6E-8935-FBBA2231EBEF</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Authors>cmendoza</Authors>
+    <Company>VMWare</Company>
+    <Product>WingtipToys Website</Product>
+    <Description>Website for .NET Core version</Description>
+    <Copyright>VMWare 2020</Copyright>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
 

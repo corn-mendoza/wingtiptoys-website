@@ -2,23 +2,19 @@
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["WingtipToysUI/WingtipToysUI.csproj", "WingtipToysUI/"]
-COPY ["WingtipModels/WingtipModels.csproj", "WingtipModels/"]
-COPY ["WingtipToysProductServiceClient/WingtipToysProductServiceClient.csproj", "WingtipToysProductServiceClient/"]
-RUN dotnet restore "WingtipToysUI/WingtipToysUI.csproj"
+COPY ["WingtipToys.Website.csproj", ""]
+RUN dotnet restore "./WingtipToys.Website.csproj"
 COPY . .
-WORKDIR "/src/WingtipToysUI"
-RUN dotnet build "WingtipToysUI.csproj" -c Release -o /app/build
+WORKDIR "/src/."
+RUN dotnet build "WingtipToys.Website.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WingtipToysUI.csproj" -c Release -o /app/publish
+RUN dotnet publish "WingtipToys.Website.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WingtipToysUI.dll"]
+ENTRYPOINT ["dotnet", "WingtipToys.Website.dll"]
