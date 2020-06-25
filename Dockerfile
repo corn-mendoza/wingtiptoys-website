@@ -6,10 +6,13 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["WingtipToys.Website.csproj", ""]
-RUN dotnet restore "./WingtipToys.Website.csproj"
+COPY ["nuget.config", ""]
+COPY ["./packages", "/src/packages"]
+RUN dotnet restore "./WingtipToys.Website.csproj" --packages /packages
+
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "WingtipToys.Website.csproj" -c Release -o /app/build
+RUN dotnet build "WingtipToys.Website.csproj" -c Release -o /app/build --packages /packages
 
 FROM build AS publish
 RUN dotnet publish "WingtipToys.Website.csproj" -c Release -o /app/publish
